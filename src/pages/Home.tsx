@@ -1,3 +1,4 @@
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 
@@ -8,8 +9,13 @@ import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
 import '../styles/auth.scss';
+import { database } from '../services/firebase';
 
 export function Home() {
+  const [roomCode, setRoomCode] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const navigate = useNavigate();
   const { user, signInWithGoogle } = useAuth();
 
@@ -19,6 +25,29 @@ export function Home() {
     }
 
     navigate('/rooms/new');
+  }
+
+  async function handleJoinRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (roomCode.trim() === '') {
+      setErrorMessage('You must provide a room code to join an existing room.');
+      setHasError(true);
+      return;
+    }
+
+    const roomRef = await database.ref(`rooms/${roomCode}`).get();
+
+    if (!roomRef.exists()) {
+      setErrorMessage(
+        'Your room code is invalid. Please contact the room host.'
+      );
+      setHasError(true);
+      return;
+    }
+
+    setHasError(false);
+    navigate(`rooms/${roomCode}`);
   }
 
   return (
@@ -39,9 +68,16 @@ export function Home() {
             Create a room with Google
           </button>
           <div className="separator">or join an existing room</div>
-          <form>
-            <input type="text" placeholder="Enter a room code" />
-            <Button type="submit">Join a room</Button>
+          <form className={hasError ? 'error-form' : ''}>
+            <input
+              type="text"
+              placeholder="Enter a room code"
+              onChange={(event) => setRoomCode(event.target.value)}
+            />
+            <p>{errorMessage}</p>
+            <Button onClick={handleJoinRoom} type="submit">
+              Join a room
+            </Button>
           </form>
         </div>
       </main>
