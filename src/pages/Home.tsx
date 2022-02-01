@@ -44,6 +44,10 @@ export function Home() {
       );
       setHasError(true);
       return;
+    } else if (roomRef.val().closedOn) {
+      setErrorMessage('This room has already been closed.');
+      setHasError(true);
+      return;
     }
 
     setHasError(false);
