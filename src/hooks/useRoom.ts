@@ -34,6 +34,36 @@ type QuestionType = {
   likeId: string | undefined;
 };
 
+function sortBy(
+  a: any,
+  b: any,
+  prop: string,
+  isBoolean: boolean = false,
+  reverse: boolean = false
+) {
+  if (isBoolean) {
+    return (!a[prop] && !b[prop]) || (a[prop] && b[prop])
+      ? 0
+      : a[prop]
+      ? reverse
+        ? 1
+        : -1
+      : reverse
+      ? -1
+      : 1;
+  } else {
+    return a[prop] < b[prop]
+      ? reverse
+        ? 1
+        : -1
+      : a[prop] > b[prop]
+      ? reverse
+        ? -1
+        : 1
+      : 0;
+  }
+}
+
 export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [questionList, setQuestionList] = useState<QuestionType[]>([]);
@@ -61,6 +91,11 @@ export function useRoom(roomId: string) {
           )?.[0]
         };
       });
+
+      parsedQuestions
+        .sort((a, b) => sortBy(a, b, 'likeCount', false, true))
+        .sort((a, b) => sortBy(a, b, 'isHighlighted', true))
+        .sort((a, b) => sortBy(a, b, 'isAnswered', true, true));
 
       setTitle(databaseRoom.title);
       setQuestionList(parsedQuestions);

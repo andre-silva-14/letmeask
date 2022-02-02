@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../components/Button';
-
-import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
+import { useAuth } from '../hooks/useAuth';
+
+import { Button } from '../components/Button';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';

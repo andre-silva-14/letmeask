@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import classnames from 'classnames';
 import copyImg from '../assets/images/copy.svg';
 
 import '../styles/components/roomCode.scss';
@@ -7,16 +9,30 @@ type RoomCodeProps = {
 };
 
 export function RoomCode(props: RoomCodeProps) {
+  const [copied, setCopied] = useState(false);
+
   function copyRoomCodeToClipboard() {
+    setCopied(true);
     navigator.clipboard.writeText(props.code);
   }
 
+  useEffect(() => {
+    if (!copied) return;
+
+    const timer = setTimeout(() => setCopied(false), 1000);
+
+    return () => clearTimeout(timer);
+  }, [copied]);
+
   return (
-    <button className="room-code" onClick={copyRoomCodeToClipboard}>
+    <button
+      className={classnames('room-code', { copied })}
+      onClick={copyRoomCodeToClipboard}
+    >
       <div>
         <img src={copyImg} alt="Copy room code" />
       </div>
-      <span>Room #{props.code}</span>
+      {copied ? <span>Copied!</span> : <span>Room #{props.code}</span>}
     </button>
   );
 }

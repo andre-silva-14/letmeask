@@ -1,5 +1,6 @@
 .room-code {
   height: 40px;
+  width: 280px;
   border-radius: 8px;
   overflow: hidden;
 
@@ -25,5 +26,10 @@
     padding: 0 16px 0;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  &.copied {
+    background: #835afd;
+    color: #fff;
   }
 }

@@ -1,13 +1,12 @@
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
-
-import { database } from '../services/firebase';
 
 import logoImg from '../assets/images/logo.svg';
 import { ReactComponent as LikeIcon } from '../assets/images/like.svg';

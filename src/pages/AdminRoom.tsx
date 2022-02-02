@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
 
 import { Button } from '../components/Button';
@@ -9,9 +10,9 @@ import logoImg from '../assets/images/logo.svg';
 import { ReactComponent as DeleteImg } from '../assets/images/delete.svg';
 import { ReactComponent as CheckImg } from '../assets/images/check.svg';
 import { ReactComponent as AnswerImg } from '../assets/images/answer.svg';
+import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
 
 import '../styles/room.scss';
-import { database } from '../services/firebase';
 
 type RoomParams = {
   id: string;
@@ -96,6 +97,13 @@ export function AdminRoom() {
                 isAnswered={question.isAnswered}
                 isHighlighted={question.isHighlighted}
               >
+                {question.likeCount > 0 && (
+                  <div className="like-info">
+                    <span>{question.likeCount}</span>
+                    <LikeIcon />
+                  </div>
+                )}
+
                 <button
                   type="button"
                   className="answered-button"
