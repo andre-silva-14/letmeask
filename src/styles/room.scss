@@ -110,7 +110,31 @@
     }
 
     .question-list {
-      margin-top: 32px;
+      margin: 32px 0;
+    }
+
+    .no-questions {
+      margin: 14vh 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      * + * {
+        margin-top: 16px;
+      }
+
+      div {
+        text-align: center;
+        max-width: 250px;
+      }
+
+      p {
+        font-size: 14px;
+        color: #737380;
+        margin-top: 8px;
+      }
     }
   }
 }

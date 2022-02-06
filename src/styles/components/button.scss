@@ -20,12 +20,13 @@
   }
 
   &.outlined {
+    transition: all 300ms;
     background: transparent;
-    border: 1px solid #ea4335;
-    color: #ea4335;
+    border: 1px solid #e73f5d;
+    color: #e73f5d;
 
     &:hover {
-      background: #ea4335;
+      background: #e73f5d;
       color: #fff;
     }
   }

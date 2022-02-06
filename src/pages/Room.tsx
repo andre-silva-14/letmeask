@@ -8,6 +8,7 @@ import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
 
+import emptyQuestionsImg from '../assets/images/empty-questions.svg';
 import logoImg from '../assets/images/logo.svg';
 import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
 

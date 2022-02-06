@@ -7,6 +7,7 @@ import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
 
 import logoImg from '../assets/images/logo.svg';
+import emptyQuestionsImg from '../assets/images/empty-questions.svg';
 import { ReactComponent as DeleteImg } from '../assets/images/delete.svg';
 import { ReactComponent as CheckImg } from '../assets/images/check.svg';
 import { ReactComponent as AnswerImg } from '../assets/images/answer.svg';
@@ -86,61 +87,83 @@ export function AdminRoom() {
             <span>{questionList.length} question(s)</span>
           )}
         </div>
-
-        <div className="question-list">
-          {questionList.map((question) => {
-            return (
-              <Question
-                key={question.id}
-                content={question.content}
-                author={question.author}
-                isAnswered={question.isAnswered}
-                isHighlighted={question.isHighlighted}
-              >
-                {question.likeCount > 0 && (
-                  <div className="like-info">
-                    <span>{question.likeCount}</span>
-                    <LikeIcon />
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  className="answered-button"
-                  onClick={() =>
-                    handleCheckQuestionAsAnswered(
-                      question.id,
-                      question.isAnswered
-                    )
-                  }
+        {questionList.length > 0 ? (
+          <div className="question-list">
+            {questionList.map((question) => {
+              return (
+                <Question
+                  key={question.id}
+                  content={question.content}
+                  author={question.author}
+                  isAnswered={question.isAnswered}
+                  isHighlighted={question.isHighlighted}
                 >
-                  <CheckImg />
-                </button>
-                {!question.isAnswered && (
+                  {question.likeCount > 0 && (
+                    <div className="like-info">
+                      <span>{question.likeCount}</span>
+                      <LikeIcon />
+                    </div>
+                  )}
+
                   <button
                     type="button"
-                    className="highlight-button"
+                    className="answered-button"
                     onClick={() =>
-                      handleHighlightQuestion(
+                      handleCheckQuestionAsAnswered(
                         question.id,
-                        question.isHighlighted
+                        question.isAnswered
                       )
                     }
                   >
-                    <AnswerImg />
+                    <CheckImg />
                   </button>
-                )}
-                <button
-                  type="button"
-                  className="delete-button"
-                  onClick={() => handleDeleteQuestion(question.id)}
-                >
-                  <DeleteImg />
-                </button>
-              </Question>
-            );
-          })}
-        </div>
+                  {!question.isAnswered && (
+                    <button
+                      type="button"
+                      className="highlight-button"
+                      onClick={() =>
+                        handleHighlightQuestion(
+                          question.id,
+                          question.isHighlighted
+                        )
+                      }
+                    >
+                      <AnswerImg />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => handleDeleteQuestion(question.id)}
+                  >
+                    <DeleteImg />
+                  </button>
+                </Question>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="no-questions">
+            <img src={emptyQuestionsImg} alt="Empty questions list" />
+            <div>
+              <h3>There are no questions yet...</h3>
+              {false ? (
+                <p>Login to be the first person asking a question!</p>
+              ) : (
+                <>
+                  {false ? (
+                    <p>Be the first to ask a question!</p>
+                  ) : (
+                    <p>
+                      Share the room code with your audience to start answering
+                      their questions!
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
