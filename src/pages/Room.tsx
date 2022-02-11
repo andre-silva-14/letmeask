@@ -8,7 +8,7 @@ import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
 
-import emptyQuestionsImg from '../assets/images/empty-questions.svg';
+import dummyAvatarImg from '../assets/images/avatar.png';
 import logoImg from '../assets/images/logo.svg';
 import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
 
@@ -99,7 +99,14 @@ export function Room() {
               </span>
             ) : (
               <div className="user-info">
-                <img src={user.avatar} alt={user.name} />
+                <img
+                  src={user.avatar}
+                  alt={user.name}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // Prevents looping
+                    currentTarget.src = dummyAvatarImg;
+                  }}
+                />
                 <span>{user.name}</span>
               </div>
             )}

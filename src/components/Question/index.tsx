@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import classnames from 'classnames';
 
+import dummyAvatarImg from '../../assets/images/avatar.png';
+
 import './styles.scss';
 
 type QuestionProps = {
@@ -32,7 +34,14 @@ export function Question({
       <p>{content}</p>
       <footer>
         <div className="user-info">
-          <img src={author.avatar} alt={author.name} />
+          <img
+            src={author.avatar}
+            alt={author.name}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // Prevents looping
+              currentTarget.src = dummyAvatarImg;
+            }}
+          />
           <span>{author.name}</span>
         </div>
         <div>{children}</div>

@@ -5,6 +5,7 @@ import { useRoom } from '../hooks/useRoom';
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
+import { ModalConfirmation } from '../components/ModalConfirmation';
 
 import logoImg from '../assets/images/logo.svg';
 import emptyQuestionsImg from '../assets/images/empty-questions.svg';
@@ -12,19 +13,33 @@ import { ReactComponent as DeleteImg } from '../assets/images/delete.svg';
 import { ReactComponent as CheckImg } from '../assets/images/check.svg';
 import { ReactComponent as AnswerImg } from '../assets/images/answer.svg';
 import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
+import CloseIcon from '../assets/images/close.svg';
 
 import '../styles/room.scss';
+import { useState } from 'react';
 
 type RoomParams = {
   id: string;
 };
 
 export function AdminRoom() {
+  const [closeRoomModal, setCloseRoomModal] = useState(false);
+  const [deleteQuestionModal, setDeleteQuestionModal] = useState(false);
+  const [deleteQuestionId, setDeleteQuestionId] = useState('');
   const params = useParams<RoomParams>();
   const roomId = params.id!;
 
   const navigate = useNavigate();
   const { questionList, title } = useRoom(roomId);
+
+  function handleCloseRoomModal(state: boolean) {
+    setCloseRoomModal(state);
+  }
+
+  function handleDeleteQuestionModal(state: boolean, questionId?: string) {
+    questionId ? setDeleteQuestionId(questionId) : setDeleteQuestionId('');
+    setDeleteQuestionModal(state);
+  }
 
   async function handleCloseRoom() {
     await database.ref(`rooms/${roomId}`).update({
@@ -34,10 +49,11 @@ export function AdminRoom() {
     navigate('/');
   }
 
-  async function handleDeleteQuestion(questionId: string) {
-    if (window.confirm('Are you sure you want to remove this question?')) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
-    }
+  async function handleDeleteQuestion() {
+    await database
+      .ref(`rooms/${roomId}/questions/${deleteQuestionId}`)
+      .remove();
+    setDeleteQuestionModal(false);
   }
 
   async function handleCheckQuestionAsAnswered(
@@ -73,7 +89,12 @@ export function AdminRoom() {
           <img src={logoImg} alt="letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleCloseRoom}>
+            <Button
+              isOutlined
+              onClick={() => {
+                handleCloseRoomModal(true);
+              }}
+            >
               Close Room
             </Button>
           </div>
@@ -134,7 +155,10 @@ export function AdminRoom() {
                   <button
                     type="button"
                     className="delete-button"
-                    onClick={() => handleDeleteQuestion(question.id)}
+                    onClick={() => {
+                      handleDeleteQuestionModal(true, question.id);
+                    }}
+                    //onClick={() => handleDeleteQuestion(question.id)}
                   >
                     <DeleteImg />
                   </button>
@@ -164,6 +188,32 @@ export function AdminRoom() {
             </div>
           </div>
         )}
+        <ModalConfirmation
+          isOpen={closeRoomModal}
+          onRequestClose={() => {
+            handleCloseRoomModal(false);
+          }}
+          onConfirmClose={handleCloseRoom}
+          title="Close Room"
+          description="Are you sure you want to close this room?"
+          rejectMessage="Cancel"
+          confirmMessage="Yes, close"
+          displayIcon={CloseIcon}
+        />
+        <ModalConfirmation
+          isOpen={deleteQuestionModal}
+          onRequestClose={() => {
+            handleDeleteQuestionModal(false);
+          }}
+          onConfirmClose={() => {
+            handleDeleteQuestion();
+          }}
+          title="Delete Question"
+          description="Are you sure you want to delete this question?"
+          rejectMessage="Cancel"
+          confirmMessage="Yes, delete"
+          displayIcon={CloseIcon}
+        />
       </main>
     </div>
   );

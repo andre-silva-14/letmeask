@@ -81,7 +81,7 @@ export function Home() {
             />
             <p>{errorMessage}</p>
             <Button onClick={handleJoinRoom} type="submit">
-              <img src={loginIcon} alt="Join image" />
+              <img src={loginIcon} alt="Join" />
               Join a room
             </Button>
           </form>
