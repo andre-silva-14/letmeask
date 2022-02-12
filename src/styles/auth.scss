@@ -61,6 +61,11 @@
       padding: 0 16px;
       background: #fff;
       border: 1px solid #a8a8b3;
+      color: #646469;
+
+      &:focus {
+        outline: 2px solid #835afd;
+      }
     }
 
     form button {

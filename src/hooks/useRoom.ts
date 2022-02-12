@@ -68,6 +68,7 @@ export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [questionList, setQuestionList] = useState<QuestionType[]>([]);
   const [title, setTitle] = useState('');
+  const [adminId, setAdminId] = useState('');
 
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`);
@@ -98,6 +99,7 @@ export function useRoom(roomId: string) {
         .sort((a, b) => sortBy(a, b, 'isAnswered', true, true));
 
       setTitle(databaseRoom.title);
+      setAdminId(databaseRoom.authorId);
       setQuestionList(parsedQuestions);
     });
 
@@ -106,5 +108,5 @@ export function useRoom(roomId: string) {
     };
   }, [roomId, user?.id]);
 
-  return { questionList, title };
+  return { questionList, title, adminId };
 }

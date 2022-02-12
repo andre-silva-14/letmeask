@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { UserContextProvider } from './contexts/UserContext';
-import { AdminRoom } from './pages/AdminRoom';
 import { Home } from './pages/Home';
 import { NewRoom } from './pages/NewRoom';
-import { Room } from './pages/Room';
+import { RoomView } from './pages/RoomView';
 
 function App() {
   return (
@@ -13,9 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms/new" element={<NewRoom />} />
-          <Route path="/rooms/:id" element={<Room />} />
-
-          <Route path="/admin/rooms/:id" element={<AdminRoom />} />
+          <Route path="/rooms/:id" element={<RoomView />} />
         </Routes>
       </UserContextProvider>
     </BrowserRouter>
