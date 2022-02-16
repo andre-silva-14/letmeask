@@ -4,5 +4,5 @@ import { UserContext } from '../contexts/UserContext';
 export function useAuth() {
   const value = useContext(UserContext);
 
-  return value;
+  return { ...value, isCompleted: true };
 }
