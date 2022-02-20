@@ -41,6 +41,7 @@ export function StandardRoomView() {
     const question = {
       content: newQuestion,
       author: {
+        id: user.id,
         name: user.name,
         avatar: user.avatar
       },

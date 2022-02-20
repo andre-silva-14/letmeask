@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FilterContext } from '../contexts/FilterContext';
 import { database } from '../services/firebase';
 import { useAuth } from './useAuth';
 
@@ -6,6 +7,7 @@ type FirebaseQuestions = Record<
   string,
   {
     author: {
+      id: string;
       name: string;
       avatar: string;
     };
@@ -24,6 +26,7 @@ type FirebaseQuestions = Record<
 type QuestionType = {
   id: string;
   author: {
+    id: string;
     name: string;
     avatar: string;
   };
@@ -64,8 +67,28 @@ function sortBy(
   }
 }
 
+function filterBy(
+  question: QuestionType,
+  property: 'content' | 'isAnswered' | 'author',
+  filterValue: string | boolean
+) {
+  if (property === 'content' && typeof filterValue === 'string') {
+    return question[property].toLowerCase().includes(filterValue.toLowerCase());
+  }
+  if (property === 'isAnswered' && filterValue === true) {
+    return question[property] === filterValue;
+  }
+  if (property === 'author' && filterValue !== '') {
+    return question[property].id === filterValue;
+  }
+
+  return true;
+}
+
 export function useRoom(roomId: string) {
   const { user } = useAuth();
+  const { textFilter, isAnsweredFilter, isMyQuestionFilter } =
+    useContext(FilterContext);
   const [questionList, setQuestionList] = useState<QuestionType[]>([]);
   const [title, setTitle] = useState('');
   const [closedOn, setClosedOn] = useState('');
@@ -94,7 +117,22 @@ export function useRoom(roomId: string) {
         };
       });
 
-      parsedQuestions
+      const filteredQuestions = parsedQuestions
+        .filter((question) =>
+          textFilter !== '' ? filterBy(question, 'content', textFilter) : true
+        )
+        .filter((question) =>
+          isAnsweredFilter === true
+            ? filterBy(question, 'isAnswered', isAnsweredFilter)
+            : true
+        )
+        .filter((question) =>
+          isMyQuestionFilter === true
+            ? filterBy(question, 'author', user?.id || '')
+            : true
+        );
+
+      filteredQuestions
         .sort((a, b) => sortBy(a, b, 'likeCount', false, true))
         .sort((a, b) => sortBy(a, b, 'isHighlighted', true))
         .sort((a, b) => sortBy(a, b, 'isAnswered', true, true));
@@ -102,13 +140,13 @@ export function useRoom(roomId: string) {
       setClosedOn(databaseRoom.closedOn);
       setTitle(databaseRoom.title);
       setAdminId(databaseRoom.authorId);
-      setQuestionList(parsedQuestions);
+      setQuestionList(filteredQuestions);
     });
 
     return () => {
       roomRef.off('value');
     };
-  }, [roomId, user?.id]);
+  }, [roomId, user?.id, textFilter, isAnsweredFilter, isMyQuestionFilter]);
 
   return { questionList, title, adminId, closedOn };
 }

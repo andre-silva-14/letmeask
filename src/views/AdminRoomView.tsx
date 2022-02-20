@@ -7,6 +7,7 @@ import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
 import { ModalConfirmation } from '../components/ModalConfirmation';
+import { FilterBar } from '../components/FilterBar';
 
 import logoImg from '../assets/images/logo.svg';
 import emptyQuestionsImg from '../assets/images/empty-questions.svg';
@@ -110,6 +111,7 @@ export function AdminRoomView() {
           )}
         </div>
 
+        <FilterBar />
         {questionList.length > 0 ? (
           <div className="question-list">
             {questionList.map((question) => {
