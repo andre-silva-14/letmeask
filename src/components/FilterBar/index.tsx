@@ -8,6 +8,7 @@ import './styles.scss';
 export function FilterBar() {
   const [displayFilters, setDisplayFilters] = useState(false);
   const {
+    textFilter,
     setTextFilter,
     isAnsweredFilter,
     setIsAnsweredFilter,
@@ -32,7 +33,13 @@ export function FilterBar() {
 
   return (
     <div className={`filter-bar ${displayFilters ? 'active-bar' : ''}`}>
-      <input type="text" onChange={handleTextFilter} />
+      <input
+        type="text"
+        spellCheck="false"
+        placeholder="Search for a keyword..."
+        onChange={handleTextFilter}
+        className={`${textFilter !== '' ? 'active-search' : ''}`}
+      />
       <div className="right-filters">
         <button
           className={`${isAnsweredFilter ? 'active-filter' : ''}`}

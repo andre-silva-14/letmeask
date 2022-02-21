@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
@@ -18,6 +18,7 @@ import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
 import CloseIcon from '../assets/images/close.svg';
 
 import '../styles/room.scss';
+import { FilterContext } from '../contexts/FilterContext';
 
 type RoomParams = {
   id: string;
@@ -27,6 +28,8 @@ export function AdminRoomView() {
   const params = useParams<RoomParams>();
   const roomId = params.id!;
   const { questionList, title } = useRoom(roomId);
+  const { textFilter, isAnsweredFilter, isMyQuestionFilter } =
+    useContext(FilterContext);
 
   const [closeRoomModal, setCloseRoomModal] = useState(false);
   const [deleteQuestionModal, setDeleteQuestionModal] = useState(false);
@@ -175,11 +178,17 @@ export function AdminRoomView() {
           <div className="no-questions">
             <img src={emptyQuestionsImg} alt="Empty questions list" />
             <div>
-              <h3>There are no questions yet...</h3>
-              <p>
-                Share the room code with your audience to start answering their
-                questions!
-              </p>
+              {!textFilter && !isAnsweredFilter && !isMyQuestionFilter ? (
+                <>
+                  <h3>There are no questions yet...</h3>
+                  <p>
+                    Share the room code with your audience to start answering
+                    their questions!
+                  </p>
+                </>
+              ) : (
+                <h3>We couldn't find any matches...</h3>
+              )}
             </div>
           </div>
         )}

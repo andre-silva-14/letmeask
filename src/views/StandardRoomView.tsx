@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
@@ -14,6 +14,8 @@ import dummyAvatarImg from '../assets/images/avatar.png';
 import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
 
 import '../styles/room.scss';
+import { FilterBar } from '../components/FilterBar';
+import { FilterContext } from '../contexts/FilterContext';
 
 type RoomParams = {
   id: string;
@@ -24,6 +26,8 @@ export function StandardRoomView() {
   const roomId = params.id!;
   const { questionList, title } = useRoom(roomId);
   const { user, signInWithGoogle } = useAuth();
+  const { textFilter, isAnsweredFilter, isMyQuestionFilter } =
+    useContext(FilterContext);
 
   const [newQuestion, setNewQuestion] = useState('');
 
@@ -124,6 +128,7 @@ export function StandardRoomView() {
           </div>
         </form>
 
+        <FilterBar />
         {questionList.length > 0 ? (
           <div className="question-list">
             {questionList.map((question) => {
@@ -157,11 +162,17 @@ export function StandardRoomView() {
           <div className="no-questions">
             <img src={emptyQuestionsImg} alt="Empty questions list" />
             <div>
-              <h3>There are no questions yet...</h3>
-              {!user?.id ? (
-                <p>Sign in to be the first person asking a question!</p>
+              {!textFilter && !isAnsweredFilter && !isMyQuestionFilter ? (
+                <>
+                  <h3>There are no questions yet...</h3>
+                  {!user?.id ? (
+                    <p>Sign in to be the first person asking a question!</p>
+                  ) : (
+                    <p>Be the first to ask a question!</p>
+                  )}
+                </>
               ) : (
-                <p>Be the first to ask a question!</p>
+                <h3>We couldn't find any matches...</h3>
               )}
             </div>
           </div>
