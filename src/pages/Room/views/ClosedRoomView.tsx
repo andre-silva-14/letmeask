@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRoom } from '../hooks/useRoom';
+import { useRoom } from '../../../hooks/useRoom';
 
-import { Button } from '../components/Button';
+import { Button } from '../../../components/Button';
 
-import logoImg from '../assets/images/logo.svg';
-import emptyQuestionsImg from '../assets/images/empty-questions.svg';
+import logoImg from '../../../assets/images/logo.svg';
+import emptyQuestionsImg from '../../../assets/images/empty-questions.svg';
 
-import '../styles/room.scss';
+import '../styles.scss';
 
 type RoomParams = {
   id: string;

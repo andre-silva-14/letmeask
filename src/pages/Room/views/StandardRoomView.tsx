@@ -1,21 +1,21 @@
 import { FormEvent, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { database } from '../services/firebase';
-import { useRoom } from '../hooks/useRoom';
-import { useAuth } from '../hooks/useAuth';
+import { database } from '../../../services/firebase';
+import { useRoom } from '../../../hooks/useRoom';
+import { useAuth } from '../../../hooks/useAuth';
 
-import { Button } from '../components/Button';
-import { RoomCode } from '../components/RoomCode';
-import { Question } from '../components/Question';
+import { Button } from '../../../components/Button';
+import { RoomCode } from '../../../components/RoomCode';
+import { Question } from '../../../components/Question';
 
-import logoImg from '../assets/images/logo.svg';
-import emptyQuestionsImg from '../assets/images/empty-questions.svg';
-import dummyAvatarImg from '../assets/images/avatar.png';
-import { ReactComponent as LikeIcon } from '../assets/images/like.svg';
+import logoImg from '../../../assets/images/logo.svg';
+import emptyQuestionsImg from '../../../assets/images/empty-questions.svg';
+import dummyAvatarImg from '../../../assets/images/avatar.png';
+import { ReactComponent as LikeIcon } from '../../../assets/images/like.svg';
 
-import '../styles/room.scss';
-import { FilterBar } from '../components/FilterBar';
-import { FilterContext } from '../contexts/FilterContext';
+import '../styles.scss';
+import { FilterBar } from '../../../components/FilterBar';
+import { FilterContext } from '../../../contexts/FilterContext';
 
 type RoomParams = {
   id: string;

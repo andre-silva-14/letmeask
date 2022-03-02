@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRoom } from '../hooks/useRoom';
-import { useAuth } from '../hooks/useAuth';
+import { useRoom } from '../../hooks/useRoom';
+import { useAuth } from '../../hooks/useAuth';
 
-import { AdminRoomView } from '../views/AdminRoomView';
-import { StandardRoomView } from '../views/StandardRoomView';
-import { ClosedRoomView } from '../views/ClosedRoomView';
-import { Loader } from '../components/Loader';
+import { AdminRoomView } from './views/AdminRoomView';
+import { StandardRoomView } from './views/StandardRoomView';
+import { ClosedRoomView } from './views/ClosedRoomView';
+import { Loader } from '../../components/Loader';
 
-import logoImg from '../assets/images/logo.svg';
+import logoImg from '../../assets/images/logo.svg';
 
 type RoomParams = {
   id: string;
