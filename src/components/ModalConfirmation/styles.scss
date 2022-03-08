@@ -4,7 +4,7 @@
   left: 50%;
   right: auto;
   bottom: auto;
-  padding: 8vh 0;
+  padding: 8vh 1em;
   margin-right: -50%;
   transform: translate(-50%, -50%);
 
@@ -54,4 +54,23 @@
   right: 0;
   bottom: 0;
   background-color: #050206c8;
+  z-index: 10000;
+}
+
+@media only screen and (max-width: 1200px) {
+  .modal {
+    width: 50vw;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .modal {
+    width: 75vw;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .modal {
+    width: 90vw;
+  }
 }

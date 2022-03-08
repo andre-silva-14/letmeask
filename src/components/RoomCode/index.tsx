@@ -8,12 +8,12 @@ type RoomCodeProps = {
   code: string;
 };
 
-export function RoomCode(props: RoomCodeProps) {
+export function RoomCode({ code, ...props }: RoomCodeProps) {
   const [copied, setCopied] = useState(false);
 
   function copyRoomCodeToClipboard() {
     setCopied(true);
-    navigator.clipboard.writeText(props.code);
+    navigator.clipboard.writeText(code);
   }
 
   useEffect(() => {
@@ -28,11 +28,12 @@ export function RoomCode(props: RoomCodeProps) {
     <button
       className={classnames('room-code', { copied })}
       onClick={copyRoomCodeToClipboard}
+      {...props}
     >
       <div>
         <img src={copyImg} alt="Copy room code" />
       </div>
-      {copied ? <span>Copied!</span> : <span>Room #{props.code}</span>}
+      {copied ? <span>Copied!</span> : <span>Room #{code}</span>}
     </button>
   );
 }

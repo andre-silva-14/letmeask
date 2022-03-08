@@ -19,6 +19,8 @@ import CloseIcon from '../../../assets/images/close.svg';
 
 import '../styles.scss';
 import { FilterContext } from '../../../contexts/FilterContext';
+import { SideDrawer } from '../../../components/SideDrawer';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 type RoomParams = {
   id: string;
@@ -30,6 +32,7 @@ export function AdminRoomView() {
   const { questionList, title } = useRoom(roomId);
   const { textFilter, isAnsweredFilter, isMyQuestionFilter } =
     useContext(FilterContext);
+  const [width] = useWindowSize();
 
   const [closeRoomModal, setCloseRoomModal] = useState(false);
   const [deleteQuestionModal, setDeleteQuestionModal] = useState(false);
@@ -93,15 +96,31 @@ export function AdminRoomView() {
         <div className="content">
           <img src={logoImg} alt="letmeask" />
           <div>
-            <RoomCode code={roomId} />
-            <Button
-              isOutlined
-              onClick={() => {
-                handleCloseRoomModal(true);
-              }}
-            >
-              Close Room
-            </Button>
+            {width > 600 ? (
+              <>
+                <RoomCode code={roomId} />
+                <Button
+                  isOutlined
+                  onClick={() => {
+                    handleCloseRoomModal(true);
+                  }}
+                >
+                  Close Room
+                </Button>
+              </>
+            ) : (
+              <SideDrawer footerLastCount={2}>
+                <RoomCode code={roomId} />
+                <Button
+                  isOutlined
+                  onClick={() => {
+                    handleCloseRoomModal(true);
+                  }}
+                >
+                  Close Room
+                </Button>
+              </SideDrawer>
+            )}
           </div>
         </div>
       </header>

@@ -1,0 +1,115 @@
+.side-drawer {
+  display: flex;
+
+  .burger {
+    z-index: 201;
+    display: block;
+    cursor: pointer;
+    margin-right: 3vw;
+
+    div {
+      width: 38px;
+      height: 3px;
+      background-color: #835afd;
+      margin: 6px 0;
+      transition: all 0.4s ease;
+    }
+  }
+}
+
+.tabs {
+  z-index: 200;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 40vw;
+  padding: 15vh 6vw 7vh 6vw;
+  background-color: #dbd1f9;
+  visibility: hidden;
+  transition: transform 400ms ease-in, opacity 400ms, visibility 200ms;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(30vh);
+  opacity: 0.6;
+
+  ul > * {
+    opacity: 0;
+    margin: 0.6em 0;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer > * {
+    opacity: 0;
+    margin: 0.6em 0;
+    width: 100%;
+  }
+}
+
+.nav-active {
+  visibility: visible;
+  transform: translateX(0);
+  opacity: 1;
+
+  footer > * {
+    opacity: 0;
+  }
+}
+
+.toggle .line1 {
+  transform: rotate(315deg) translate(-6.5px, 7.5px);
+}
+
+.toggle .line2 {
+  opacity: 0;
+}
+
+.toggle .line3 {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes navLinkFadeFooter {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .side-drawer aside {
+    width: 60vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .side-drawer aside {
+    width: 80vw;
+  }
+}
+
+@media only screen and (max-width: 361px) {
+  .side-drawer aside {
+    width: 95vw;
+  }
+}

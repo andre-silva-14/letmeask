@@ -10,10 +10,10 @@
   margin-top: 0.3em;
 
   input {
-    visibility: hidden;
     z-index: -100;
 
     margin-left: 4px;
+    margin-right: 4px;
     line-height: 20px;
     border: 1px solid #9696a5;
     color: #646469;
@@ -35,11 +35,11 @@
   }
 
   button {
-    visibility: hidden;
     z-index: -100;
 
     padding: 4px 10px;
     font-size: 0.85rem;
+    white-space: nowrap;
     background: #fff;
     border-radius: 100px;
     border: 1px solid #9696a5;
@@ -108,13 +108,29 @@
     width: 100%;
     background-color: #dadae6;
   }
+
+  & > div {
+    display: flex;
+    width: 100%;
+    visibility: hidden;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
 }
 
 .active-bar {
   input,
   button {
-    visibility: visible;
     z-index: 0;
     transform: translateX(0);
+  }
+
+  & > div {
+    visibility: visible;
   }
 }

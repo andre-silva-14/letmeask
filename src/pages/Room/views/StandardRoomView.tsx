@@ -16,6 +16,8 @@ import { ReactComponent as LikeIcon } from '../../../assets/images/like.svg';
 import '../styles.scss';
 import { FilterBar } from '../../../components/FilterBar';
 import { FilterContext } from '../../../contexts/FilterContext';
+import { SideDrawer } from '../../../components/SideDrawer';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 type RoomParams = {
   id: string;
@@ -28,6 +30,7 @@ export function StandardRoomView() {
   const { user, signInWithGoogle } = useAuth();
   const { textFilter, isAnsweredFilter, isMyQuestionFilter } =
     useContext(FilterContext);
+  const [width] = useWindowSize();
 
   const [newQuestion, setNewQuestion] = useState('');
 
@@ -83,7 +86,15 @@ export function StandardRoomView() {
         <div className="content">
           <img src={logoImg} alt="letmeask" />
           <div>
-            <RoomCode code={roomId} />
+            {width > 600 ? (
+              <>
+                <RoomCode code={roomId} />
+              </>
+            ) : (
+              <SideDrawer footerLastCount={2}>
+                <RoomCode code={roomId} />
+              </SideDrawer>
+            )}
           </div>
         </div>
       </header>

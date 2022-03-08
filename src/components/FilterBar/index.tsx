@@ -33,35 +33,38 @@ export function FilterBar() {
 
   return (
     <div className={`filter-bar ${displayFilters ? 'active-bar' : ''}`}>
-      <input
-        type="text"
-        spellCheck="false"
-        placeholder="Search for a keyword..."
-        onChange={handleTextFilter}
-        className={`${textFilter !== '' ? 'active-search' : ''}`}
-      />
-      <div className="right-filters">
-        <button
-          className={`${isAnsweredFilter ? 'active-filter' : ''}`}
-          onClick={handleIsAnsweredFilter}
-        >
-          Answered
-        </button>
-        <button
-          className={`${isMyQuestionFilter ? 'active-filter' : ''}`}
-          onClick={handleIsMyQuestionFilter}
-        >
-          My Questions
-        </button>
-        <span className="background-reset">
-          <span
-            className={`filter-icon ${displayFilters ? 'display-filters' : ''}`}
-            onClick={handleDisplayFilters}
+      <div>
+        <input
+          type="text"
+          spellCheck="false"
+          placeholder="Search for a keyword..."
+          onChange={handleTextFilter}
+          className={`${textFilter !== '' ? 'active-search' : ''}`}
+        />
+        <div className="right-filters">
+          <button
+            className={`${isAnsweredFilter ? 'active-filter' : ''}`}
+            onClick={handleIsAnsweredFilter}
           >
-            <FilterIcon />
-          </span>
-        </span>
+            Answered
+          </button>
+          <button
+            className={`${isMyQuestionFilter ? 'active-filter' : ''}`}
+            onClick={handleIsMyQuestionFilter}
+          >
+            My Questions
+          </button>
+        </div>
       </div>
+
+      <span className="background-reset">
+        <span
+          className={`filter-icon ${displayFilters ? 'display-filters' : ''}`}
+          onClick={handleDisplayFilters}
+        >
+          <FilterIcon />
+        </span>
+      </span>
     </div>
   );
 }
