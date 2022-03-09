@@ -16,6 +16,25 @@ export function NewRoom() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  async function generateRoomCode(): Promise<string> {
+    const asciiMap = Array.from({ length: 90 - 65 + 1 }, (_, i) => 65 + i);
+
+    const roomCode =
+      String.fromCharCode(
+        asciiMap[Math.floor(Math.random() * asciiMap.length)]
+      ) +
+      String.fromCharCode(
+        asciiMap[Math.floor(Math.random() * asciiMap.length)]
+      ) +
+      Math.random().toString().slice(2, 8);
+
+    if ((await database.ref(`rooms/${roomCode}`).get()).exists()) {
+      return generateRoomCode();
+    }
+
+    return roomCode;
+  }
+
   async function handleCreateRoom(event: FormEvent) {
     event.preventDefault();
 
@@ -23,14 +42,16 @@ export function NewRoom() {
       return;
     }
 
+    const roomCode = await generateRoomCode();
+
     const roomRef = database.ref('rooms');
 
-    const firebaseRoom = await roomRef.push({
+    await roomRef.child(roomCode).set({
       title: newRoom,
       authorId: user?.id
     });
 
-    navigate(`/rooms/${firebaseRoom.key}`);
+    navigate(`/rooms/${roomCode}`);
   }
 
   return (

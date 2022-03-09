@@ -15,6 +15,7 @@ type ModalConfirmationProps = {
   displayIcon?: string;
   style?: {};
   children?: ReactNode;
+  ariaHideApp?: boolean;
 };
 
 export function ModalConfirmation(props: ModalConfirmationProps) {

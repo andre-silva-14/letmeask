@@ -18,7 +18,6 @@ export function FilterBar() {
 
   function handleTextFilter(e: ChangeEvent<HTMLInputElement>) {
     setTextFilter(e.currentTarget.value);
-    console.log(e.currentTarget.value);
   }
   function handleIsAnsweredFilter() {
     setIsAnsweredFilter(!isAnsweredFilter);

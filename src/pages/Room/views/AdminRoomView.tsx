@@ -213,6 +213,7 @@ export function AdminRoomView() {
         )}
 
         <ModalConfirmation
+          ariaHideApp={false}
           isOpen={closeRoomModal}
           onRequestClose={() => {
             handleCloseRoomModal(false);
@@ -225,6 +226,7 @@ export function AdminRoomView() {
           displayIcon={CloseIcon}
         />
         <ModalConfirmation
+          ariaHideApp={false}
           isOpen={deleteQuestionModal}
           onRequestClose={() => {
             handleDeleteQuestionModal(false);
