@@ -1,4 +1,7 @@
-<img alt="Letmeask - Create your realtime Q&A Session" title="Letmeask - Create your realtime Q&A Session" src=".github/logo.svg" style="width:300px; margin:0 auto;" />
+
+<p align="center">
+  <img alt="Letmeask - Create your realtime Q&A Session" title="Letmeask - Create your realtime Q&A Session" src=".github/logo.svg" style="width:300px; margin:0 auto;" />
+</p>
 
 <hr/>
 
